@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../../models/todo';
 import { Tag } from '../../models/tag';
+import { DataService } from '../../services/data.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-todos-list',
@@ -22,11 +24,23 @@ export class TodosListComponent implements OnInit {
     { taskName: 'Buy milk', tags: []}
   ];
 
+  constructor(private dataService: DataService) {}
+
   ngOnInit(): void {
     this.todosList = this.dummyTodos;
   }
 
   onLoadTodos() {
-    this.todosList = this.dummyTodos;
+    this.dataService.fetchTodos()
+      .pipe(map(responseData => {
+
+        return responseData;
+      }))
+      .subscribe(
+        response => {
+          console.log(response);
+          this.todosList = response;
+        }
+      );
   }
 }
