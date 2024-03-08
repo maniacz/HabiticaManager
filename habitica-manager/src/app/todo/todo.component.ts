@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Tag } from '../models/tag';
 
 @Component({
   selector: 'app-todo',
@@ -7,4 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class TodoComponent {
   @Input() taskName: string = "";
+  @Input() assignedTags: Tag[] = [];
+  isSelected: boolean = false;
 }

@@ -1,3 +1,4 @@
-<p>todos-list works!</p>
 <button class="btn btn-primary" (click)="onLoadTodos()">Load Todos</button>
-<app-todo *ngFor="let todo of todosList" [taskName]="todo.taskName"></app-todo>
+<div class="col-4">
+    <app-todo *ngFor="let todo of todosList" [taskName]="todo.taskName" [assignedTags]="todo.tags"></app-todo>
+</div>
