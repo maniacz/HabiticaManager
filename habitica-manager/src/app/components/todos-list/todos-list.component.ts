@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from '../models/todo';
-import { Tag } from '../models/tag';
+import { Todo } from '../../models/todo';
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-todos-list',

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Tag } from '../models/tag';
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-todo',
