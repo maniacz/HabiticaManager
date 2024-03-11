@@ -7,12 +7,14 @@ import { TodoComponent } from './components/todo/todo.component';
 import { TodosListComponent } from './components/todos-list/todos-list.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { TagFiltersComponent } from './components/tag-filters/tag-filters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
-    TodosListComponent
+    TodosListComponent,
+    TagFiltersComponent
   ],
   imports: [
     BrowserModule,

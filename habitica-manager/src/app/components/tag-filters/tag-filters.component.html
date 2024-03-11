@@ -1,0 +1,18 @@
+<div class="tag-filters-container">
+    <div *ngFor="let tag of tags">
+        <label>
+            <input type="checkbox" [value]="tag.name" (change)="onChange($event)">{{ tag.name }}
+        </label>
+    </div>
+    <br>
+    <div>
+        <label>
+            <input type="radio" [value]="true" [(ngModel)]="selectedFilterContainingAllTags">ALL
+        </label>
+        <label>
+            <input type="radio" [value]="false" [(ngModel)]="selectedFilterContainingAllTags">ANY
+        </label>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="onFilterTodos()">Filter</button>
+</div>
