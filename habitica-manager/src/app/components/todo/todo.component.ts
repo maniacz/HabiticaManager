@@ -19,7 +19,6 @@ export class TodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.validationResult = this.todoEmojiValidator.validate(this.taskName, this.assignedTags);
-    console.log(this.validationResult);
   }
 
   setBackgroundColor() {

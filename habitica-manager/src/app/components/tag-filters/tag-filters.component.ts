@@ -3,6 +3,7 @@ import { Tag } from '../../models/tag';
 import { DataService } from '../../services/data.service';
 import { timeout } from 'rxjs';
 import { OutletContext } from '@angular/router';
+import { FilterTodoEventArgs } from '../../models/filter-todos-event-args';
 
 @Component({
   selector: 'app-tag-filters',
@@ -11,9 +12,9 @@ import { OutletContext } from '@angular/router';
 })
 export class TagFiltersComponent implements OnInit {
   tags: Tag[] = [];
-  selectedFilterContainingAllTags: boolean = true;
+  selectedTodosWithOnlySelectedTags: boolean = true;
   selectedTagNames: string[] = [];
-  @Output() filterTodos = new EventEmitter<{selectedFilterContainingAllTags: boolean, selectedTagNames: string[]}>();
+  @Output() filterTodos = new EventEmitter<FilterTodoEventArgs>();
 
 
   mockTags: Tag[] = [
@@ -129,18 +130,8 @@ export class TagFiltersComponent implements OnInit {
 
   onFilterTodos() {
     console.log('Selected tags: ' + this.selectedTagNames);
-    console.log('Selected ALL: ' + this.selectedFilterContainingAllTags);
-    const eventArgs = new FilterTodoEventArgs(this.selectedFilterContainingAllTags, this.selectedTagNames);
+    console.log('Selected ALL: ' + this.selectedTodosWithOnlySelectedTags);
+    const eventArgs = new FilterTodoEventArgs(this.selectedTodosWithOnlySelectedTags, this.selectedTagNames);
     this.filterTodos.emit(eventArgs);
   }
-}
-
-export class FilterTodoEventArgs {
-    selectedFilterContainingAllTags: boolean = true;
-    selectedTagNames: string[] = [];
-
-    constructor(containingAllTags: boolean, tagNames: string[]) {
-        this.selectedFilterContainingAllTags = containingAllTags;
-        this.selectedTagNames = tagNames;
-    }
 }

@@ -1,4 +1,4 @@
 <div style="display: flex;">
-    <app-tag-filters></app-tag-filters>
-    <app-todos-list></app-todos-list>
+    <app-tag-filters (filterTodos)="onFilterTodos($event)"></app-tag-filters>
+    <app-todos-list [todosList]="todosToDisplay"></app-todos-list>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Todo } from '../../models/todo';
 import { Tag } from '../../models/tag';
 import { DataService } from '../../services/data.service';
@@ -10,7 +10,7 @@ import { map } from 'rxjs';
   styleUrl: './todos-list.component.css'
 })
 export class TodosListComponent implements OnInit {
-  todosList: Todo[] = [];
+  @Input() todosList: Todo[] = [];
 
   dummyTags1: Tag[] = [
     { id: "958a73fb-d341-4513-83c2-c90c318193b5", name: "dom" },
