@@ -1,4 +1,5 @@
 <button class="btn btn-primary" (click)="onLoadTodos()">Load Todos</button>
+<button class="btn btn-success" (click)="onSetCurrentWeekTodos()">Set For Current Week</button>
 <div class="col-4">
-    <app-todo *ngFor="let todo of todosList" [taskName]="todo.taskName" [assignedTags]="todo.tags"></app-todo>
+    <app-todo *ngFor="let todo of todosList" [taskName]="todo.taskName" [assignedTags]="todo.tags" [(isSelected)]="todo.isSelected"></app-todo>
 </div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Todo } from '../models/todo';
@@ -10,6 +10,7 @@ import { Tag } from '../models/tag';
 export class DataService {
   todosUrl: string = "https://localhost:7248/todos";
   tagsUrl: string = "https://localhost:7248/tags";
+  setTagUrl: string = "https://localhost:7248/addtag";
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +21,16 @@ export class DataService {
   fetchTags(): Observable<Tag[]> {
     return this.http.get<TagsResponse>(this.tagsUrl)
     .pipe(map(response => response.data))
+  }
+
+  assignCurrentWeekTagForTodo(todo: Todo, currentWeekTag: Tag): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('todoId', todo.taskId)
+    queryParams = queryParams.append('tagId', currentWeekTag.id)
+
+    return this.http.post(this.setTagUrl, null, {
+      params: queryParams
+    })
   }
 }
 

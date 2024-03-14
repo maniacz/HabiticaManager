@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Todo } from '../../models/todo';
 import { Tag } from '../../models/tag';
 import { DataService } from '../../services/data.service';
-import { map } from 'rxjs';
+import { filter, first, firstValueFrom, map } from 'rxjs';
+import { TodoElement } from '../../models/todo-element';
 
 @Component({
   selector: 'app-todos-list',
@@ -10,7 +11,7 @@ import { map } from 'rxjs';
   styleUrl: './todos-list.component.css'
 })
 export class TodosListComponent implements OnInit {
-  @Input() todosList: Todo[] = [];
+  @Input() todosList: TodoElement[] = [];
 
   dummyTags1: Tag[] = [
     { id: "958a73fb-d341-4513-83c2-c90c318193b5", name: "dom" },
@@ -22,11 +23,15 @@ export class TodosListComponent implements OnInit {
     // { taskName: 'Go to the shop', tags: this.dummyTags1 },
     // { taskName: 'Clean the house', tags: []},
     // { taskName: 'Buy milk', tags: []},
-    { taskName: ':bangbang::house: Zawieź narty do serwisu', tags: this.dummyTags1},
-    { taskName: ':bangbang::car: Zawieź narty do serwisu', tags: this.dummyTags1},
-    { taskName: ':house: Zawieź narty do serwisu', tags: this.dummyTags1},
-    { taskName: ':bangbang::house::car: Zawieź narty do serwisu', tags: this.dummyTags1},
+    { taskId: 'fdsff', taskName: ':bangbang::house: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
+    { taskId: 'fdsff', taskName: ':bangbang::car: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
+    { taskId: 'fdsff', taskName: ':house: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
+    { taskId: 'fdsff', taskName: ':bangbang::house::car: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
   ];
+
+  mockTodos: TodoElement[] = [
+    new TodoElement('fdsff',':bangbang::house: Zawieź narty do serwisu', this.dummyTags1)
+  ]
 
   constructor(private dataService: DataService) {}
 
@@ -36,15 +41,45 @@ export class TodosListComponent implements OnInit {
 
   onLoadTodos() {
     this.dataService.fetchTodos()
-      .pipe(map(responseData => {
-
-        return responseData;
-      }))
+      // .pipe(map(responseData => {
+      //   return responseData;
+      // }))
       .subscribe(
         response => {
           console.log(response);
+          // this.todosList = response;
           this.todosList = response;
         }
       );
+    // this.todosList.forEach(todo => todo.isSelected = false);
+  }
+
+  async onSetCurrentWeekTodos() {
+    const currentWeekTag = await this.getCurrentWeekTag();
+
+
+    let alertMessage = '';
+    let selectedTodos = this.todosList.filter(todo => todo.isSelected);
+    selectedTodos.forEach(todo => {
+      if (todo.tags.map(t => t.name).includes('w tym tygodniu')) {
+        alertMessage = 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: "w tym tygodniu"';
+        return;
+      }
+      if (currentWeekTag) {
+        this.dataService.assignCurrentWeekTagForTodo(todo, currentWeekTag)
+        .subscribe(response => {
+          console.log(response);
+        })
+      } else {
+        // TODO show alert and handle situation when currentWeekTag wasn't found in Habitica users' tags
+      }
+    });
+  }
+
+  async getCurrentWeekTag(): Promise<Tag | undefined> {
+    const tags = await firstValueFrom(this.dataService.fetchTags());
+    const currentWeekTag = tags.find(t => t.name === 'w tym tygodniu');
+
+    return currentWeekTag;
   }
 }

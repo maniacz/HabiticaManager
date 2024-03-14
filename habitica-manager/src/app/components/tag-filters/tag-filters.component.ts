@@ -103,16 +103,16 @@ export class TagFiltersComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // this.dataService.fetchTags()
-    // .subscribe(response => {
-    //   this.tags = response;
-    // })
+    this.dataService.fetchTags()
+    .subscribe(response => {
+      this.tags = response;
+    })
 
     // setTimeout(() => {
     //   console.log(this.tags);
     // }, 2000);
 
-    this.tags = this.mockTags
+    // this.tags = this.mockTags
   }
 
   onChange(event: Event) {
