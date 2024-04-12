@@ -4,6 +4,7 @@ import { Tag } from '../../models/tag';
 import { DataService } from '../../services/data.service';
 import { filter, first, firstValueFrom, map } from 'rxjs';
 import { TodoElement } from '../../models/todo-element';
+import { TagValue } from '../../enums/tag-values';
 
 @Component({
   selector: 'app-todos-list',
@@ -12,6 +13,7 @@ import { TodoElement } from '../../models/todo-element';
 })
 export class TodosListComponent implements OnInit {
   @Input() todosList: TodoElement[] = [];
+  TagValue = TagValue;
 
   dummyTags1: Tag[] = [
     { id: "958a73fb-d341-4513-83c2-c90c318193b5", name: "dom" },
@@ -54,24 +56,22 @@ export class TodosListComponent implements OnInit {
     // this.todosList.forEach(todo => todo.isSelected = false);
   }
 
-  async onSetCurrentWeekTodos() {
-    const currentWeekTag = await this.getCurrentWeekTag();
-
-
+  async onAssignTodosForWeek(weekTagValue: TagValue) {
+    const weekTag = await this.getTag(weekTagValue);
     let alertMessage = '';
     let selectedTodos = this.todosList.filter(todo => todo.isSelected);
     selectedTodos.forEach(todo => {
-      if (todo.tags.map(t => t.name).includes('w tym tygodniu')) {
-        alertMessage += 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: "w tym tygodniu"\n';
+      if (todo.tags.map(t => t.name).includes(weekTagValue)) {
+        alertMessage += 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: ' + weekTagValue + '\n';
         return;
       }
-      if (currentWeekTag) {
-        this.dataService.assignCurrentWeekTagForTodo(todo, currentWeekTag)
+      if (weekTag) {
+        this.dataService.assignCurrentWeekTagForTodo(todo, weekTag)
         .subscribe(response => {
           console.log(response);
         })
       } else {
-        // TODO show alert and handle situation when currentWeekTag wasn't found in Habitica users' tags
+        alert('Użytkownik nie posiada zdefiniowanego taga ' + weekTagValue + ' w Habitice');
       }
     });
     if (alertMessage) {
@@ -79,10 +79,8 @@ export class TodosListComponent implements OnInit {
     }
   }
 
-  async getCurrentWeekTag(): Promise<Tag | undefined> {
-    const tags = await firstValueFrom(this.dataService.fetchTags());
-    const currentWeekTag = tags.find(t => t.name === 'w tym tygodniu');
-
-    return currentWeekTag;
+  async getTag(tagName: string): Promise<Tag | undefined> {
+    const allTags = await firstValueFrom(this.dataService.fetchTags());
+    return allTags.find(t => t.name === tagName);
   }
 }
