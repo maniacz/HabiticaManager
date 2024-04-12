@@ -62,7 +62,7 @@ export class TodosListComponent implements OnInit {
     let selectedTodos = this.todosList.filter(todo => todo.isSelected);
     selectedTodos.forEach(todo => {
       if (todo.tags.map(t => t.name).includes('w tym tygodniu')) {
-        alertMessage = 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: "w tym tygodniu"';
+        alertMessage += 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: "w tym tygodniu"\n';
         return;
       }
       if (currentWeekTag) {
@@ -74,6 +74,9 @@ export class TodosListComponent implements OnInit {
         // TODO show alert and handle situation when currentWeekTag wasn't found in Habitica users' tags
       }
     });
+    if (alertMessage) {
+      alert(alertMessage);
+    }
   }
 
   async getCurrentWeekTag(): Promise<Tag | undefined> {
