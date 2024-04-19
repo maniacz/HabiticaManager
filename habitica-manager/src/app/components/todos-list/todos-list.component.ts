@@ -83,4 +83,9 @@ export class TodosListComponent implements OnInit {
     const allTags = await firstValueFrom(this.dataService.fetchTags());
     return allTags.find(t => t.name === tagName);
   }
+
+  onShowNextWeekTodos() {
+    const result = this.todosList.filter(t => t.tags.find(tag => tag.name == TagValue.NextWeek));
+    this.todosList = result;
+  }
 }

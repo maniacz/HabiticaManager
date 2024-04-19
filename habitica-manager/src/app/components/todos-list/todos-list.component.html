@@ -1,6 +1,7 @@
 <button class="btn btn-primary" (click)="onLoadTodos()">Load Todos</button>
 <button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.CurrentWeek)">Set For Current Week</button>
 <button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.NextWeek)">Set For Next Week</button>
+<button class="btn btn-dark" (click)="onShowNextWeekTodos()">Show Next Week Todos</button>
 <div class="col-4">
     <app-todo *ngFor="let todo of todosList" [taskName]="todo.taskName" [assignedTags]="todo.tags" [(isSelected)]="todo.isSelected"></app-todo>
 </div>
