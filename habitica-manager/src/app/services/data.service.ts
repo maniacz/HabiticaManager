@@ -11,7 +11,7 @@ export class DataService {
   todosUrl: string = "https://localhost:7248/todos";
   tagsUrl: string = "https://localhost:7248/tags";
   setTagUrl: string = "https://localhost:7248/addtag";
-
+  
   constructor(private http: HttpClient) { }
 
   fetchTodos(): Observable<Todo[]> {
@@ -23,16 +23,21 @@ export class DataService {
     .pipe(map(response => response.data))
   }
 
-  assignCurrentWeekTagForTodo(todo: Todo, currentWeekTag: Tag): Observable<any> {
+  assignTagForTodo(todo: Todo, tag: Tag): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('todoId', todo.taskId)
-    queryParams = queryParams.append('tagId', currentWeekTag.id)
+    queryParams = queryParams.append('tagId', tag.id)
 
     return this.http.post(this.setTagUrl, null, {
       params: queryParams
     }).pipe(
       catchError(this.handleError)
     );
+  }
+
+  removeTagFromTodo(todo: Todo, tag: Tag) {
+    const removeTagUrl = `https://localhost:7248/removetagfromtodo/${todo.taskId}/${tag.id}`;
+    return this.http.delete(removeTagUrl)
   }
 
   private handleError(error: HttpErrorResponse) {
