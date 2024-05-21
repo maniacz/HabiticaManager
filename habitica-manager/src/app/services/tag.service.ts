@@ -9,7 +9,7 @@ import { TodoElement } from '../models/todo-element';
   providedIn: 'root'
 })
 export class TagService {
-  error = new Subject<string>();
+  errorSub = new Subject<string>();
 
   constructor(private dataService: DataService) { }
 
@@ -24,11 +24,25 @@ export class TagService {
       this.dataService.removeTagFromTodo(todo, nextWeekTag).subscribe(
         response => {},
         error => {
-          this.error.next(error.error);
+          this.errorSub.next(error.error);
         }
       );
     } else {
       //TODO: Wyrzuć alert, że nie pobrało nextWeekTag
+    }
+  }
+
+  async assignCurrentWeekTagForTodo(todo: TodoElement) {
+    const currentWeekTag = await this.getTag(TagValue.CurrentWeek);
+    if (currentWeekTag) {
+      this.dataService.assignTagForTodo(todo, currentWeekTag).subscribe(
+        response => {},
+        error => {
+          this.errorSub.next(error.error);
+        }
+      )
+    } else {
+      //TODO: Wyrzuć alert, że nie pobrało currentWeekTag
     }
   }
 }

@@ -42,7 +42,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.todosList = this.dummyTodos;
-    this.errorSub = this.tagService.error.subscribe(errorMessage => {
+    this.errorSub = this.tagService.errorSub.subscribe(errorMessage => {
       this.error = errorMessage;
     });
   }
@@ -97,7 +97,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
     const nextWeekTodos = this.getNextWeekTodos();
     nextWeekTodos.forEach(todo => {
       this.tagService.removeNextWeekTagFromTodo(todo);
-      // this.tagService.assignCurrentWeekTagForTodo(todo);
+      this.tagService.assignCurrentWeekTagForTodo(todo);
     });
   }
 
