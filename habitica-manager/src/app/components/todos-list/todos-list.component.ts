@@ -89,6 +89,10 @@ export class TodosListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onShowCurrentWeekTodos() {
+    this.todosList = this.getCurrentWeekTodos();
+  }
+
   onShowNextWeekTodos() {
     this.todosList = this.getNextWeekTodos();
   }
@@ -107,5 +111,9 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   private getNextWeekTodos(): TodoElement[] {
     return this.todosList.filter(t => t.tags.find(tag => tag.name == TagValue.NextWeek));
+  }
+
+  private getCurrentWeekTodos(): TodoElement[] {
+    return this.todosList.filter(t => t.tags.find(tag => tag.name == TagValue.CurrentWeek));
   }
 }
