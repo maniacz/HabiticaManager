@@ -21,6 +21,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   constructor(private dataService: DataService, private tagService: TagService) {}
 
   ngOnInit(): void {
+    this.loadTodos();
     this.errorSub = this.tagService.errorSub.subscribe(errorMessage => {
       this.error = errorMessage;
     });
@@ -31,18 +32,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   }
 
   onLoadTodos() {
-    this.dataService.fetchTodos()
-      // .pipe(map(responseData => {
-      //   return responseData;
-      // }))
-      .subscribe(
-        response => {
-          console.log(response);
-          // this.todosList = response;
-          this.todosList = response;
-        }
-      );
-    // this.todosList.forEach(todo => todo.isSelected = false);
+    this.loadTodos();
   }
 
   async onAssignTodosForWeek(weekTagValue: TagValue) {
@@ -86,6 +76,15 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   onHandleError() {
     this.error = "";
+  }
+
+  private loadTodos(): void {
+    this.dataService.fetchTodos()
+    .subscribe(
+      response => {
+        this.todosList = response;
+      }
+    );
   }
 
   private getNextWeekTodos(): TodoElement[] {
