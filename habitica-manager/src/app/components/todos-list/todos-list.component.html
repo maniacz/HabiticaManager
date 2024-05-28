@@ -1,9 +1,15 @@
-<button class="btn btn-primary" (click)="onLoadTodos()">Load Todos</button>
-<button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.CurrentWeek)">Set For Current Week</button>
-<button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.NextWeek)">Set For Next Week</button>
-<button class="btn btn-info" (click)="onShowCurrentWeekTodos()">Show Current Week Todos</button>
-<button class="btn btn-dark" (click)="onShowNextWeekTodos()">Show Next Week Todos</button>
-<button class="btn btn-secondary" (click)="onConvertNextWeekTodosToCurrentWeek()">Convert Next to Current Week</button>
+<div>
+    <button class="btn btn-primary" (click)="onLoadTodos()">Load Todos</button>
+    <button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.CurrentWeek)">Set For Current Week</button>
+    <button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.NextWeek)">Set For Next Week</button>
+</div>
+<div>
+    <button class="btn btn-info" (click)="onShowCurrentWeekTodos()">Show Current Week Todos</button>
+    <button class="btn btn-dark" (click)="onShowNextWeekTodos()">Show Next Week Todos</button>
+    <button class="btn btn-secondary" (click)="onConvertNextWeekTodosToCurrentWeek()">Convert Next to Current Week</button>
+</div>
+
+<app-loading-spinner></app-loading-spinner>
 
 <div *ngIf="error" class="alert alert-danger">
     <h1>An Error Occurred!</h1>
