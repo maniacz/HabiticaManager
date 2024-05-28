@@ -18,30 +18,9 @@ export class TodosListComponent implements OnInit, OnDestroy {
   error: String = "";
   private errorSub!: Subscription;
 
-  dummyTags1: Tag[] = [
-    { id: "958a73fb-d341-4513-83c2-c90c318193b5", name: "dom" },
-    { id: "2995fb09-6228-4388-9082-7fc657fd7a85", name: "pilne ważne" },
-    // { id: "981f7a2c-fe2d-4484-b994-996868f6f251", name: "przy kompie" }
-  ];
-
-  dummyTodos: Todo[] = [
-    // { taskName: 'Go to the shop', tags: this.dummyTags1 },
-    // { taskName: 'Clean the house', tags: []},
-    // { taskName: 'Buy milk', tags: []},
-    { taskId: 'fdsff', taskName: ':bangbang::house: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
-    { taskId: 'fdsff', taskName: ':bangbang::car: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
-    { taskId: 'fdsff', taskName: ':house: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
-    { taskId: 'fdsff', taskName: ':bangbang::house::car: Zawieź narty do serwisu', tags: this.dummyTags1, isSelected: false },
-  ];
-
-  mockTodos: TodoElement[] = [
-    new TodoElement('fdsff',':bangbang::house: Zawieź narty do serwisu', this.dummyTags1)
-  ]
-
   constructor(private dataService: DataService, private tagService: TagService) {}
 
   ngOnInit(): void {
-    this.todosList = this.dummyTodos;
     this.errorSub = this.tagService.errorSub.subscribe(errorMessage => {
       this.error = errorMessage;
     });
