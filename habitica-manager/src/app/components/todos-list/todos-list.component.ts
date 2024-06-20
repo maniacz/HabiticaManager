@@ -14,6 +14,7 @@ import { TagService } from '../../services/tag.service';
 })
 export class TodosListComponent implements OnInit, OnDestroy {
   @Input() todosList: TodoElement[] = [];
+  todosToDisplay: TodoElement[] = [];
   TagValue = TagValue;
   error: String = "";
   private errorSub!: Subscription;
@@ -59,11 +60,11 @@ export class TodosListComponent implements OnInit, OnDestroy {
   }
 
   onShowCurrentWeekTodos() {
-    this.todosList = this.getCurrentWeekTodos();
+    this.todosToDisplay = this.getCurrentWeekTodos();
   }
 
   onShowNextWeekTodos() {
-    this.todosList = this.getNextWeekTodos();
+    this.todosToDisplay = this.getNextWeekTodos();
   }
 
   onConvertNextWeekTodosToCurrentWeek() {
@@ -83,15 +84,18 @@ export class TodosListComponent implements OnInit, OnDestroy {
     .subscribe(
       response => {
         this.todosList = response;
+        this.todosToDisplay = response;
       }
     );
   }
 
   private getNextWeekTodos(): TodoElement[] {
-    return this.todosList.filter(t => t.tags.find(tag => tag.name == TagValue.NextWeek));
+    this.todosToDisplay = this.todosList;
+    return this.todosToDisplay.filter(t => t.tags.find(tag => tag.name == TagValue.NextWeek));
   }
 
   private getCurrentWeekTodos(): TodoElement[] {
-    return this.todosList.filter(t => t.tags.find(tag => tag.name == TagValue.CurrentWeek));
+    this.todosToDisplay = this.todosList;
+    return this.todosToDisplay.filter(t => t.tags.find(tag => tag.name == TagValue.CurrentWeek));
   }
 }
