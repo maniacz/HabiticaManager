@@ -4,6 +4,7 @@ import { Subject, firstValueFrom } from 'rxjs';
 import { DataService } from './data.service';
 import { TagValue } from '../enums/tag-values';
 import { TodoElement } from '../models/todo-element';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { TodoElement } from '../models/todo-element';
 export class TagService {
   errorSub = new Subject<string>();
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private messageService: MessageService) { }
 
   async getTag(tagName: string): Promise<Tag | undefined> {
     const allTags = await firstValueFrom(this.dataService.fetchTags());
@@ -28,7 +29,7 @@ export class TagService {
         }
       );
     } else {
-      //TODO: Wyrzuć alert, że nie pobrało nextWeekTag
+      this.messageService.add({ severity: 'error', summary: 'Usuwanie taga', detail: 'Nie został prawidłowo pobrany tag nextWeekTag' });
     }
   }
 
@@ -42,7 +43,7 @@ export class TagService {
         }
       )
     } else {
-      //TODO: Wyrzuć alert, że nie pobrało currentWeekTag
+      this.messageService.add({ severity: 'error', summary: 'Dodawanie taga', detail: 'Nie został prawidłowo pobrany tag currentWeekTag' });
     }
   }
 }

@@ -6,11 +6,13 @@ import { Subscription, filter, first, firstValueFrom, map } from 'rxjs';
 import { TodoElement } from '../../models/todo-element';
 import { TagValue } from '../../enums/tag-values';
 import { TagService } from '../../services/tag.service';
+import { Message, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-todos-list',
   templateUrl: './todos-list.component.html',
-  styleUrl: './todos-list.component.css'
+  styleUrl: './todos-list.component.css',
+  // providers: [MessageService]
 })
 export class TodosListComponent implements OnInit, OnDestroy {
   @Input() todosList: TodoElement[] = [];
@@ -19,7 +21,7 @@ export class TodosListComponent implements OnInit, OnDestroy {
   error: String = "";
   private errorSub!: Subscription;
 
-  constructor(private dataService: DataService, private tagService: TagService) {}
+  constructor(private dataService: DataService, private tagService: TagService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.loadTodos();
@@ -38,25 +40,30 @@ export class TodosListComponent implements OnInit, OnDestroy {
 
   async onAssignTodosForWeek(weekTagValue: TagValue) {
     const weekTag = await this.tagService.getTag(weekTagValue);
-    let alertMessage = '';
     let selectedTodos = this.todosList.filter(todo => todo.isSelected);
     selectedTodos.forEach(todo => {
       if (todo.tags.map(t => t.name).includes(weekTagValue)) {
-        alertMessage += 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: ' + weekTagValue + '\n';
+        const details = 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: ' + weekTagValue + '\n';
+        this.messageService.add({ severity: 'warn', summary: 'Dodawanie taga', detail: details });
         return;
       }
       if (weekTag) {
         this.dataService.assignTagForTodo(todo, weekTag)
         .subscribe(response => {
           console.log(response);
+          if (response.success === true)
+            this.messageService.add({ severity: 'success', summary: 'Dodawanie taga', detail: 'Dodawanie OK' });
+          else
+            this.messageService.add({ severity: 'error', summary: 'Dodawanie taga', detail: 'Dodawanie Zjebane:\n' + response, sticky: true });
         })
       } else {
-        alert('Użytkownik nie posiada zdefiniowanego taga ' + weekTagValue + ' w Habitice');
+        const details = 'Użytkownik nie posiada zdefiniowanego taga ' + weekTagValue + ' w Habitice';
+        this.messageService.add({ severity: 'error', summary: 'Dodawanie taga', detail: details, life: 5000 });
       }
     });
-    if (alertMessage) {
-      alert(alertMessage);
-    }
+
+    // Refresh todos from DB
+    this.loadTodos();
   }
 
   onShowCurrentWeekTodos() {
