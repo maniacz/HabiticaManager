@@ -1,6 +1,7 @@
 .todo-container {
     display: flex;
     margin-top: 20px;
+    width: 100%;
 }
 
 .todo-item {

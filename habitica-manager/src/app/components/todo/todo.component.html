@@ -1,5 +1,11 @@
-<div class="todo-container">
-    <input type="checkbox" class="flex form-check-input todo-item bg-info" [(ngModel)]="isSelected" (change)="onChange()">
-    <p class="flex todo-item" [ngStyle]="{ backgroundColor: setBackgroundColor() }">{{ taskName }}</p>
-    <p class="flex todo-item" *ngFor="let tag of assignedTags">{{ tag.name }}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="todo-container card">
+                <input type="checkbox" class="flex form-check-input todo-item bg-info" [(ngModel)]="isSelected" (change)="onChange()">
+                <p class="flex todo-item" [ngStyle]="{ backgroundColor: setBackgroundColor() }">{{ taskName }}</p>
+                <p class="flex todo-item" *ngFor="let tag of assignedTags">{{ tag.name }}</p>
+            </div>
+        </div>
+    </div>
 </div>
