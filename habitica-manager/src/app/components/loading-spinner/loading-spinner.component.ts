@@ -8,7 +8,8 @@ import { LoadingService } from '../../services/loading.service';
       <div class="spinner"></div>
     </div>
   `,
-  styleUrls: ['./loading-spinner.component.css']
+  styleUrls: ['./loading-spinner.component.css'],
+  standalone: false,
 })
 export class LoadingSpinnerComponent {
   loading$ = this.loadingService.loading$;

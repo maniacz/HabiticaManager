@@ -12,7 +12,7 @@ import { Message, MessageService } from 'primeng/api';
   selector: 'app-todos-list',
   templateUrl: './todos-list.component.html',
   styleUrl: './todos-list.component.css',
-  // providers: [MessageService]
+  standalone: false,
 })
 export class TodosListComponent implements OnInit, OnDestroy {
   @Input() todosList: TodoElement[] = [];

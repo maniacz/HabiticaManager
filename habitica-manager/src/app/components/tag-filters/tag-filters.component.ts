@@ -8,7 +8,8 @@ import { FilterTodoEventArgs } from '../../models/filter-todos-event-args';
 @Component({
   selector: 'app-tag-filters',
   templateUrl: './tag-filters.component.html',
-  styleUrl: './tag-filters.component.css'
+  styleUrl: './tag-filters.component.css',
+  standalone: false,
 })
 export class TagFiltersComponent implements OnInit {
   tags: Tag[] = [];

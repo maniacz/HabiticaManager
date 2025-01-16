@@ -7,7 +7,8 @@ import { TodoValidation } from '../../enums/todo-validation';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrl: './todo.component.css'
+  styleUrl: './todo.component.css',
+  standalone: false,
 })
 export class TodoComponent implements OnInit {
   @Input() taskName: string = "";
