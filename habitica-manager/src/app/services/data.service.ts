@@ -89,6 +89,19 @@ export class DataService {
     return this.http.delete(removeTagUrl)
   }
 
+  // Filters todos returnig todos containing tags only with provided tagNames or with provided tagNames and other tags
+  filterTodosByTags(tagNames: string[], onlySelectedTags: boolean) {
+    this.todos().set(this.todosResult().data);
+    this.todos().update(todos => {
+      todos = todos?.filter(todo => todo.tags.length > 0)
+      if (onlySelectedTags) {
+        return todos?.filter(todo => todo.tags.map(t => t.name).every(t => tagNames.includes(t) && tagNames.length === todo.tags.length))
+      } else {
+        return todos?.filter(todo => tagNames.every(tagName => todo.tags.map(t => t.name).includes(tagName)))
+      }
+    });
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
