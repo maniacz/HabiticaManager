@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, effect } from '@angular/core';
 import { Todo } from '../../models/todo';
 import { Tag } from '../../models/tag';
 import { DataService } from '../../services/data.service';
@@ -16,15 +16,18 @@ import { Message, MessageService } from 'primeng/api';
 })
 export class TodosListComponent implements OnInit, OnDestroy {
   @Input() todosList: TodoElement[] = [];
-  todosToDisplay: TodoElement[] = [];
   TagValue = TagValue;
   error: String = "";
   private errorSub!: Subscription;
 
-  constructor(private dataService: DataService, private tagService: TagService, private messageService: MessageService) {}
+  todos = this.dataService.todosToDisplay;
+
+  constructor(private dataService: DataService, private tagService: TagService, private messageService: MessageService) {
+    effect(() => console.log('Loaded todos: ' + JSON.stringify(this.todos(), null, 2)));
+  }
 
   ngOnInit(): void {
-    this.loadTodos();
+    this.dataService.getAllTodos();
     this.errorSub = this.tagService.errorSub.subscribe(errorMessage => {
       this.error = errorMessage;
     });
@@ -35,13 +38,14 @@ export class TodosListComponent implements OnInit, OnDestroy {
   }
 
   onLoadTodos() {
-    this.loadTodos();
+    this.dataService.getAllTodos();
+    console.log('onLoadTodos Loaded todos: ' + JSON.stringify(this.todos(), null, 2));
   }
 
   async onAssignTodosForWeek(weekTagValue: TagValue) {
     const weekTag = await this.tagService.getTag(weekTagValue);
-    let selectedTodos = this.todosList.filter(todo => todo.isSelected);
-    selectedTodos.forEach(todo => {
+    let selectedTodos = this.todos()?.filter(todo => todo.isSelected);
+    selectedTodos?.forEach(todo => {
       if (todo.tags.map(t => t.name).includes(weekTagValue)) {
         const details = 'Todo ' + todo.taskName + ' już jest oznaczone tagiem: ' + weekTagValue + '\n';
         this.messageService.add({ severity: 'warn', summary: 'Dodawanie taga', detail: details });
@@ -63,46 +67,26 @@ export class TodosListComponent implements OnInit, OnDestroy {
     });
 
     // Refresh todos from DB
-    this.loadTodos();
-  }
-
-  onShowCurrentWeekTodos() {
-    this.todosToDisplay = this.getCurrentWeekTodos();
-  }
-
-  onShowNextWeekTodos() {
-    this.todosToDisplay = this.getNextWeekTodos();
+    // this.loadTodos();
   }
 
   onConvertNextWeekTodosToCurrentWeek() {
     const nextWeekTodos = this.getNextWeekTodos();
-    nextWeekTodos.forEach(todo => {
-      this.tagService.removeNextWeekTagFromTodo(todo);
-      this.tagService.assignCurrentWeekTagForTodo(todo);
-    });
+    // nextWeekTodos.forEach(todo => {
+    //   this.tagService.removeNextWeekTagFromTodo(todo);
+    //   this.tagService.assignCurrentWeekTagForTodo(todo);
+    // });
   }
 
   onHandleError() {
     this.error = "";
   }
 
-  private loadTodos(): void {
-    this.dataService.fetchTodos()
-    .subscribe(
-      response => {
-        this.todosList = response;
-        this.todosToDisplay = response;
-      }
-    );
+  getNextWeekTodos() {
+    this.dataService.getNextWeekTodos();
   }
 
-  private getNextWeekTodos(): TodoElement[] {
-    this.todosToDisplay = this.todosList;
-    return this.todosToDisplay.filter(t => t.tags.find(tag => tag.name == TagValue.NextWeek));
-  }
-
-  private getCurrentWeekTodos(): TodoElement[] {
-    this.todosToDisplay = this.todosList;
-    return this.todosToDisplay.filter(t => t.tags.find(tag => tag.name == TagValue.CurrentWeek));
+  getCurrentWeekTodos() {
+    this.dataService.getCurrentWeekTodos();
   }
 }

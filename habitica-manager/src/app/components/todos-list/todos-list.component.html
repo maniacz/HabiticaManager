@@ -5,8 +5,8 @@
     <button class="btn btn-success" (click)="onAssignTodosForWeek(TagValue.NextWeek)">Set For Next Week</button>
 </div>
 <div>
-    <button class="btn btn-info" (click)="onShowCurrentWeekTodos()">Show Current Week Todos</button>
-    <button class="btn btn-dark" (click)="onShowNextWeekTodos()">Show Next Week Todos</button>
+    <button class="btn btn-info" (click)="getCurrentWeekTodos()">Show Current Week Todos</button>
+    <button class="btn btn-dark" (click)="getNextWeekTodos()">Show Next Week Todos</button>
     <button class="btn btn-secondary" (click)="onConvertNextWeekTodosToCurrentWeek()">Convert Next to Current Week</button>
 </div>
 
@@ -19,5 +19,5 @@
 </div>
 
 <div class="col-9">
-    <app-todo *ngFor="let todo of todosToDisplay" [taskName]="todo.taskName" [assignedTags]="todo.tags" [(isSelected)]="todo.isSelected"></app-todo>
+    <app-todo *ngFor="let todo of todos()" [taskName]="todo.taskName" [assignedTags]="todo.tags" [(isSelected)]="todo.isSelected"></app-todo>
 </div>
