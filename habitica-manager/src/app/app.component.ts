@@ -11,7 +11,6 @@ import { DataService } from './services/data.service';
 })
 export class AppComponent {
   title = 'habitica-manager';
-  todosToDisplay: Todo[] = [];
 
   constructor(private dataService: DataService) {}
 

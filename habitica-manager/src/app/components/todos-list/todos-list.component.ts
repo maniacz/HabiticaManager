@@ -15,7 +15,6 @@ import { Message, MessageService } from 'primeng/api';
   standalone: false,
 })
 export class TodosListComponent implements OnInit, OnDestroy {
-  @Input() todosList: TodoElement[] = [];
   TagValue = TagValue;
   error: String = "";
   private errorSub!: Subscription;
