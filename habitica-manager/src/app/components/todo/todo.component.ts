@@ -28,11 +28,11 @@ export class TodoComponent implements OnInit {
       case TodoValidation.Valid:
         return 'transparent';
       case TodoValidation.missingAssignedTags:
-        return 'red';
+        return 'pink';
       case TodoValidation.missingEmojis:
-        return 'blue';
+        return 'lightblue';
       case TodoValidation.missingBoth:
-        return 'purple';
+        return 'yellow';
       default:
         // todo: handle error
         return 'green'
