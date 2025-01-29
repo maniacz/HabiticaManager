@@ -12,6 +12,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MessageService } from 'primeng/api';
     HttpClientModule,
     AppRoutingModule,
     ToastModule,
+    MatCardModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
