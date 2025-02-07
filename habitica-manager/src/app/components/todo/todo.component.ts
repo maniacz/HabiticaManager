@@ -46,7 +46,7 @@ export class TodoComponent implements OnInit {
   setBackgroundColor() {
     switch (this.validationResult.result) {
       case TodoValidation.Valid:
-        return 'transparent';
+        return 'rgb(209, 209, 209)';
       case TodoValidation.missingAssignedTags:
         return 'pink';
       case TodoValidation.missingEmojis:

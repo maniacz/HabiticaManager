@@ -8,15 +8,30 @@
     margin-left: 20px;
 }
 
+.todo-card {
+    margin-bottom: 2%;
+    background-color: rgb(209, 209, 209);
+}
+
 .todo-card-title {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .todo-card-title input {
-    margin-right: 10px; /* Adjust the spacing between the checkbox and the title as needed */
+    margin-right: 10px;
+    justify-content: flex-start;
+    align-self: center;
+}
+
+.todo-card-title h2 {
+    font-size: 1.25rem;
+    margin: 0;
+    align-self: center;
 }
 
 .todo-card-footer {
     padding: 16px;
+    padding-left: 10%;
 }

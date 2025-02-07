@@ -1,8 +1,8 @@
-<mat-card class="todo-card" appearance="outlined">
+<mat-card class="todo-card" appearance="outlined" [ngStyle]="{ backgroundColor: setBackgroundColor() }">
     <mat-card-header>
         <mat-card-title class="todo-card-title">
             <input type="checkbox" class="flex form-check-input todo-item bg-info" [(ngModel)]="isSelected" (change)="onChange()">
-            <h2 [ngStyle]="{ backgroundColor: setBackgroundColor() }">{{ taskName }}</h2>
+            <h2 >{{ taskName }}</h2>
         </mat-card-title>
     </mat-card-header>
     <mat-card-footer class="todo-card-footer">
