@@ -7,3 +7,16 @@
 .todo-item {
     margin-left: 20px;
 }
+
+.todo-card-title {
+    display: flex;
+    align-items: center;
+}
+
+.todo-card-title input {
+    margin-right: 10px; /* Adjust the spacing between the checkbox and the title as needed */
+}
+
+.todo-card-footer {
+    padding: 16px;
+}

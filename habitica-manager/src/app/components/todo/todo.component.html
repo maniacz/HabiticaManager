@@ -1,11 +1,13 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="todo-container card">
-                <input type="checkbox" class="flex form-check-input todo-item bg-info" [(ngModel)]="isSelected" (change)="onChange()">
-                <p class="flex todo-item" [ngStyle]="{ backgroundColor: setBackgroundColor() }">{{ taskName }}</p>
-                <p class="flex todo-item" *ngFor="let tag of assignedTags">{{ tag.name }}</p>
-            </div>
-        </div>
-    </div>
-</div>
+<mat-card class="todo-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title class="todo-card-title">
+            <input type="checkbox" class="flex form-check-input todo-item bg-info" [(ngModel)]="isSelected" (change)="onChange()">
+            <h2 [ngStyle]="{ backgroundColor: setBackgroundColor() }">{{ taskName }}</h2>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-footer class="todo-card-footer">
+        <mat-chip-set>
+            <mat-chip *ngFor="let tag of assignedTags">{{ tag.name }}</mat-chip>
+        </mat-chip-set>
+    </mat-card-footer>
+</mat-card>
