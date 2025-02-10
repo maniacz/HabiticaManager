@@ -8,7 +8,7 @@ import emoji from 'emoji-dictionary';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrl: './todo.component.css',
+  styleUrl: './todo.component.scss',
   standalone: false,
 })
 export class TodoComponent implements OnInit {

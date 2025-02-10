@@ -8,7 +8,7 @@ import { LoadingService } from '../../services/loading.service';
       <div class="spinner"></div>
     </div>
   `,
-  styleUrls: ['./loading-spinner.component.css'],
+  styleUrls: ['./loading-spinner.component.scss'],
   standalone: false,
 })
 export class LoadingSpinnerComponent {

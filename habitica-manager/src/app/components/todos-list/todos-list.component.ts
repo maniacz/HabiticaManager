@@ -11,7 +11,7 @@ import { Message, MessageService } from 'primeng/api';
 @Component({
   selector: 'app-todos-list',
   templateUrl: './todos-list.component.html',
-  styleUrl: './todos-list.component.css',
+  styleUrl: './todos-list.component.scss',
   standalone: false,
 })
 export class TodosListComponent implements OnInit, OnDestroy {
