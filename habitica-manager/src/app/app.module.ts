@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { TodosManagerComponent } from './components/todos-manager/todos-manager.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatChipsModule } from '@angular/material/chips';
     TodoComponent,
     TodosListComponent,
     TagFiltersComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    TodosManagerComponent
   ],
   imports: [
     BrowserModule,
