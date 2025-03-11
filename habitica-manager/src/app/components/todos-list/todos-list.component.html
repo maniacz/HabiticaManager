@@ -7,6 +7,6 @@
     <button class="btn btn-danger" (click)="onHandleError()">Confirm</button>
 </div> -->
 
-<div class="col-9">
+<div class="col-10 todos-container">
     <app-todo *ngFor="let todo of todos()" [taskName]="todo.taskName" [assignedTags]="todo.tags" [(isSelected)]="todo.isSelected"></app-todo>
 </div>
