@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, signal, Signal } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { TagService } from '../../services/tag.service';
 import { MessageService } from 'primeng/api';
@@ -16,7 +16,7 @@ export class TodosManagerComponent {
   TagValue = TagValue;
   error: String = "";
   private errorSub!: Subscription;
-  todos: Signal<Todo[] | undefined>;
+  todos: Signal<Todo[] | undefined> = signal([]);
 
   constructor(private dataService: DataService, private tagService: TagService, private messageService: MessageService) { }
 

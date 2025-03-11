@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, OnInit, signal, Signal } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Todo } from '../../models/todo';
 
@@ -9,7 +9,7 @@ import { Todo } from '../../models/todo';
   standalone: false,
 })
 export class TodosListComponent implements OnInit {
-  todos: Signal<Todo[] | undefined>;
+  todos: Signal<Todo[] | undefined> = signal([]);
 
   constructor(private dataService: DataService) { }
 
