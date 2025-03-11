@@ -33,12 +33,9 @@ export class TodoComponent implements OnInit {
     matches?.forEach((match) => {
       // Strip surrounding colons
       const emojiText = match.slice(1, -1);
-      console.log(emojiText);
       const unicode = emoji.getUnicode(emojiText);
-      console.log(unicode);
       // Replace emoji text with emoji
       text = text.replace(match, unicode);
-      console.log(text);
       this.taskName = text;
     });
 }

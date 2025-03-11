@@ -34,7 +34,7 @@ export class TodosManagerComponent {
 
   onLoadTodos() {
     this.dataService.getAllTodos();
-    console.log('onLoadTodos Loaded todos: ' + JSON.stringify(this.todos(), null, 2));
+    // console.log('onLoadTodos Loaded todos: ' + JSON.stringify(this.todos(), null, 2));
   }
 
   async onAssignTodosForWeek(weekTagValue: TagValue) {
